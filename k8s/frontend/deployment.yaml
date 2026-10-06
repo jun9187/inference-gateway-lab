@@ -22,9 +22,13 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: GATEWAY_BACKEND_URL
-          value: http://inference-gateway.inference-lab.svc.cluster.local:80/v1
+        - name: GATEWAY_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: GATEWAY_BACKEND_SVC
         - name: GATEWAY_MODEL 
-          value: {}
-        - name: GATEWAY_MODEL_NAME
-          value: "vllm-model"
+          valueFrom:
+            configMapKeyRef:
+              name: frontend-config
+              key: GATEWAY_MODEL
