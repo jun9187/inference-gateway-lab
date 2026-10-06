@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: inference-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - image: ivantan67/inference-gateway-lab-frontend:latest
+        name: frontend
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GATEWAY_BACKEND_URL
+          value: http://inference-gateway.inference-lab.svc.cluster.local:80/v1
+        - name: GATEWAY_MODEL 
+          value: {}
+        - name: GATEWAY_MODEL_NAME
+          value: "vllm-model"
